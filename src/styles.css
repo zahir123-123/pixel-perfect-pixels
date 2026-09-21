@@ -19,7 +19,7 @@
  */
 
 @theme inline {
-  --font-sans: "Roboto", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Roboto Condensed", "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -168,4 +168,24 @@
 
 @utility approval-panel {
   box-shadow: 0 3px 14px oklch(0.34 0.04 255 / 0.11);
+}
+
+@utility view-cut-button {
+  position: relative;
+  border: 0;
+  background: var(--approved);
+  clip-path: polygon(0 0, 88% 0, 100% 27%, 100% 73%, 88% 100%, 0 100%);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 1.5px;
+    background: var(--background);
+    clip-path: polygon(0 0, 87% 0, 100% 27%, 100% 73%, 87% 100%, 0 100%);
+  }
+
+  & > span {
+    position: relative;
+    z-index: 1;
+  }
 }
