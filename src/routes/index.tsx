@@ -48,6 +48,24 @@ const statuses = [
   { key: "approved", title: "Approved", subtitle: "Documents approved successfully", count: 28, icon: CheckCircle2 },
 ] as const;
 
+const toneClasses = {
+  pending: {
+    shell: "border-l-pending bg-pending-soft/45",
+    soft: "bg-pending-soft text-pending",
+    count: "bg-pending-soft text-pending",
+  },
+  rejected: {
+    shell: "border-l-rejected bg-rejected-soft/45",
+    soft: "bg-rejected-soft text-rejected",
+    count: "bg-rejected-soft text-rejected",
+  },
+  approved: {
+    shell: "border-l-approved bg-approved-soft/45",
+    soft: "bg-approved-soft text-approved",
+    count: "bg-approved-soft text-approved",
+  },
+};
+
 function Index() {
   const [activeTab, setActiveTab] = useState("Document");
   const [open, setOpen] = useState<string>("pending");
@@ -78,10 +96,10 @@ function Index() {
 
         <section className="px-[18px] pb-28 pt-[13px]">
           <div className="grid grid-cols-3 rounded-[14px] bg-muted/70 p-1 approval-panel">
-            {[["Subject", BookOpen], ["Document", FileText], ["Fee", IndianRupee]].map(([label, Icon]) => {
+            {([{ label: "Subject", icon: BookOpen }, { label: "Document", icon: FileText }, { label: "Fee", icon: IndianRupee }]).map(({ label, icon: Icon }) => {
               const selected = activeTab === label;
-              return <Button key={label as string} variant="tab" onClick={() => setActiveTab(label as string)} className={`relative flex h-[52px] items-center justify-center gap-2 rounded-[11px] text-[14px] font-bold ${selected ? "bg-approval-blue text-primary-foreground approval-shadow" : "text-muted-foreground"}`}>
-                <Icon size={21} strokeWidth={2.4} /> {label as string}
+              return <Button key={label} variant="tab" onClick={() => setActiveTab(label)} className={`relative flex h-[52px] items-center justify-center gap-2 rounded-[11px] text-[14px] font-bold ${selected ? "bg-approval-blue text-primary-foreground approval-shadow" : "text-muted-foreground"}`}>
+                <Icon size={21} strokeWidth={2.4} /> {label}
                 {selected && <span className="absolute -bottom-2 size-4 rotate-45 bg-approval-blue" />}
               </Button>;
             })}
@@ -90,15 +108,15 @@ function Index() {
           <div className="mt-5 space-y-3">
             {statuses.map((status) => {
               const expanded = open === status.key;
-              const tone = status.key === "pending" ? "pending" : status.key === "rejected" ? "rejected" : "approved";
+              const tone = toneClasses[status.key];
               const Icon = status.icon;
               return (
-                <article key={status.key} className={`overflow-hidden rounded-[15px] border border-border border-l-[3px] border-l-${tone} bg-${tone}-soft/45 approval-panel`}>
+                <article key={status.key} className={`overflow-hidden rounded-[15px] border border-border border-l-[3px] approval-panel ${tone.shell}`}>
                   <div className="grid grid-cols-[56px_minmax(0,1fr)_55px_38px] items-center gap-3 px-3 py-[13px]">
-                    <div className={`grid size-14 place-items-center rounded-[13px] bg-${tone}-soft text-${tone}`}><FileText size={31} strokeWidth={2.4} /><Icon className="absolute translate-x-3 translate-y-3" size={16} strokeWidth={3} /></div>
+                    <div className={`grid size-14 place-items-center rounded-[13px] ${tone.soft}`}><FileText size={31} strokeWidth={2.4} /><Icon className="absolute translate-x-3 translate-y-3" size={16} strokeWidth={3} /></div>
                     <div className="min-w-0"><h3 className="text-[18px] font-extrabold">{status.title}</h3><p className="mt-1 truncate text-[12px] text-muted-foreground">{status.subtitle}</p></div>
-                    <strong className={`grid h-12 place-items-center rounded-[12px] bg-${tone}-soft text-[29px] text-${tone}`}>{status.count}</strong>
-                    <Button aria-label={`${expanded ? "Collapse" : "Expand"} ${status.title}`} onClick={() => setOpen(expanded ? "" : status.key)} className={`grid size-9 place-items-center rounded-full bg-${tone}-soft text-${tone}`}>{expanded ? <ChevronUp size={21} /> : <ChevronDown size={21} />}</Button>
+                    <strong className={`grid h-12 place-items-center rounded-[12px] text-[29px] ${tone.count}`}>{status.count}</strong>
+                    <Button variant="icon" size="icon" aria-label={`${expanded ? "Collapse" : "Expand"} ${status.title}`} onClick={() => setOpen(expanded ? "" : status.key)} className={`grid size-9 place-items-center rounded-full ${tone.soft}`}>{expanded ? <ChevronUp size={21} /> : <ChevronDown size={21} />}</Button>
                   </div>
                   {expanded && status.key === "pending" && (
                     <div className="border-t border-border bg-background px-3 pb-3 pt-2">
@@ -121,7 +139,7 @@ function Index() {
         </section>
 
         <nav className="fixed inset-x-0 bottom-3 z-10 mx-auto grid w-[calc(100%-36px)] max-w-[394px] grid-cols-4 rounded-[25px] border border-border bg-background px-2 py-2 approval-shadow">
-          {[["Home", Home], ["Notices", Bell], ["Reports", ListTree], ["Profile", CircleUserRound]].map(([label, Icon], index) => <Button key={label as string} variant="nav" className={`flex h-[55px] flex-col items-center justify-center gap-1 text-[11px] font-bold ${index === 0 ? "text-approval-blue" : "text-muted-foreground"}`}><span className={index === 0 ? "grid size-8 place-items-center rounded-full bg-approval-blue/10" : "grid size-8 place-items-center"}><Icon size={23} strokeWidth={2.5} /></span>{label as string}</Button>)}
+          {([{ label: "Home", icon: Home }, { label: "Notices", icon: Bell }, { label: "Reports", icon: ListTree }, { label: "Profile", icon: CircleUserRound }]).map(({ label, icon: Icon }, index) => <Button key={label} variant="nav" className={`flex h-[55px] flex-col items-center justify-center gap-1 text-[11px] font-bold ${index === 0 ? "text-approval-blue" : "text-muted-foreground"}`}><span className={index === 0 ? "grid size-8 place-items-center rounded-full bg-approval-blue/10" : "grid size-8 place-items-center"}><Icon size={23} strokeWidth={2.5} /></span>{label}</Button>)}
         </nav>
       </div>
     </main>
