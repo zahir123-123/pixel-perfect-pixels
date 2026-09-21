@@ -19,6 +19,7 @@
  */
 
 @theme inline {
+  --font-sans: "Roboto", ui-sans-serif, system-ui, sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -59,6 +60,14 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-approval-blue: var(--approval-blue);
+  --color-approval-deep: var(--approval-deep);
+  --color-pending: var(--pending);
+  --color-rejected: var(--rejected);
+  --color-approved: var(--approved);
+  --color-pending-soft: var(--pending-soft);
+  --color-rejected-soft: var(--rejected-soft);
+  --color-approved-soft: var(--approved-soft);
 }
 
 :root {
@@ -95,6 +104,14 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+  --approval-blue: oklch(0.59 0.23 254);
+  --approval-deep: oklch(0.23 0.08 276);
+  --pending: oklch(0.67 0.22 39);
+  --rejected: oklch(0.58 0.25 16);
+  --approved: oklch(0.61 0.2 145);
+  --pending-soft: oklch(0.96 0.035 48);
+  --rejected-soft: oklch(0.96 0.04 10);
+  --approved-soft: oklch(0.96 0.04 145);
 }
 
 .dark {
@@ -140,5 +157,15 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    margin: 0;
   }
+}
+
+@utility approval-shadow {
+  box-shadow: 0 8px 22px oklch(0.32 0.04 255 / 0.12);
+}
+
+@utility approval-panel {
+  box-shadow: 0 3px 14px oklch(0.34 0.04 255 / 0.11);
 }
