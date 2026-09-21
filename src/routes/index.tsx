@@ -129,7 +129,7 @@ function Index() {
                           <tbody>{filtered.map((row) => <tr key={row[0]} className="h-[34px] border-t border-border text-[11px]"><td className="px-2">{row[0]}</td><td className="truncate px-2">{row[1]}</td><td className="truncate px-2">{row[2]}</td><td className="px-1 text-center"><Button variant="view" className="view-cut-button h-[25px] w-full p-0 font-bold text-approved hover:bg-approved" onClick={() => window.alert(`${row[1]} — ${row[2]}`)}><span>View</span></Button></td></tr>)}</tbody>
                         </table>
                       </div>
-                      <div className="mt-2 grid h-[24px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 text-[12px] text-muted-foreground"><span>Showing {filtered.length} of 12 pending documents</span><Button className="flex h-6 items-center gap-1 p-0 font-bold text-approval-blue">View All <ArrowRight size={15} /></Button></div>
+                      <div className="mt-2 grid h-[24px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 text-[12px] text-muted-foreground"><span>Showing {filtered.length} of 12 pending documents</span><Button variant="icon" size="icon" className="flex h-6 w-auto items-center gap-1 p-0 font-bold text-approval-blue">View All <ArrowRight size={15} /></Button></div>
                     </div>
                   )}
                 </article>
@@ -138,7 +138,7 @@ function Index() {
           </div>
         </section>
 
-        <nav className="fixed inset-x-0 bottom-3 z-10 mx-auto grid w-[calc(100%-36px)] max-w-[394px] grid-cols-4 rounded-[25px] border border-border bg-background px-2 py-2 approval-shadow">
+        <nav className="fixed inset-x-0 bottom-14 z-10 mx-auto grid w-[calc(100%-36px)] max-w-[394px] grid-cols-4 rounded-[25px] border border-border bg-background px-2 py-2 approval-shadow">
           {([{ label: "Home", icon: Home }, { label: "Notices", icon: Bell }, { label: "Reports", icon: ListTree }, { label: "Profile", icon: CircleUserRound }]).map(({ label, icon: Icon }, index) => <Button key={label} variant="nav" className={`flex h-[55px] flex-col items-center justify-center gap-1 text-[11px] font-bold ${index === 0 ? "text-approval-blue" : "text-muted-foreground"}`}><span className={index === 0 ? "grid size-8 place-items-center rounded-full bg-approval-blue/10" : "grid size-8 place-items-center"}><Icon size={23} strokeWidth={2.5} /></span>{label}</Button>)}
         </nav>
       </div>
